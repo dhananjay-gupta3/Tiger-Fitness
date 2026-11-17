@@ -20,6 +20,8 @@ export const LenisSmoothScroll: React.FC<LenisSmoothScrollProps> = ({ children }
       touchMultiplier: 1.5,
     });
 
+    (window as any).__lenis = lenis;
+
     let animationFrameId: number;
 
     function raf(time: number) {
@@ -31,6 +33,7 @@ export const LenisSmoothScroll: React.FC<LenisSmoothScrollProps> = ({ children }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      delete (window as any).__lenis;
       lenis.destroy();
     };
   }, []);

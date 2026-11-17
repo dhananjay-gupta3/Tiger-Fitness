@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, MessageCircle, Star, Clock, MapPin, Sparkles } from 'lucide-react';
+import { Menu, X, ArrowUpRight, MessageCircle, Star, Clock, MapPin, Sparkles, Phone, ChevronRight } from 'lucide-react';
 import { CLIENT_BUSINESS } from '../data/gymData';
 import { TigerLogo } from './TigerLogo';
 
@@ -19,19 +19,44 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock background scrolling completely when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      document.documentElement.style.overflow = 'hidden';
+      (window as any).__lenis?.stop();
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      document.documentElement.style.overflow = '';
+      (window as any).__lenis?.start();
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      document.documentElement.style.overflow = '';
+      (window as any).__lenis?.start();
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
-    { name: 'The Gym', href: '#the-gym' },
-    { name: 'Pricing & Plans', href: '#pricing' },
-    { name: 'Timings & Coach', href: '#timings' },
-    { name: 'Location & Contact', href: '#contact' },
+    { number: '01', name: 'The Gym & Floor', href: '#the-gym' },
+    { number: '02', name: 'Pricing & Plans', href: '#pricing' },
+    { number: '03', name: 'Timings & Coach', href: '#timings' },
+    { number: '04', name: 'Location & Contact', href: '#contact' },
   ];
 
   const handleNavClick = (href: string) => {
     setMobileMenuOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Timeout gives time for menu to close and scroll unlock
+    setTimeout(() => {
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
@@ -71,8 +96,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
       <header
         className={`sticky top-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#091C17]/95 backdrop-blur-md py-3.5 shadow-2xl border-b border-gold/20'
-            : 'bg-emerald py-4 border-b border-gold/15'
+            ? 'bg-[#091C17]/95 backdrop-blur-md py-3 shadow-2xl border-b border-gold/20'
+            : 'bg-emerald py-3.5 sm:py-4 border-b border-gold/15'
         }`}
       >
         <div className="max-w-site mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -89,7 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center gap-6">
+          <nav className="hidden xl:flex items-center gap-7">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -106,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
             ))}
           </nav>
 
-          {/* Header Action Buttons */}
+          {/* Header Action Buttons (Desktop) */}
           <div className="hidden sm:flex items-center gap-3">
             <a
               href={`https://wa.me/${CLIENT_BUSINESS.contact.whatsapp}?text=Hello%20The%20Gym%20Tiger%20Fitness%2C%20I%20would%20like%20to%20inquire%20about%20membership%20packages%20and%20timings.`}
@@ -114,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
               rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-full bg-[#0E261F] hover:bg-[#15392F] border border-gold/30 text-xs font-semibold text-ivory flex items-center gap-2 transition-all"
             >
-              <MessageCircle className="w-3.5 h-3.5 text-lime" />
+              <MessageCircle className="w-3.5 h-3.5 text-lime fill-current" />
               <span>WhatsApp Concierge</span>
             </a>
 
@@ -123,41 +148,57 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
                 if (onInquireClick) onInquireClick();
                 else handleNavClick('#contact');
               }}
-              className="btn-gold py-2.5 px-5 text-xs"
+              className="btn-gold py-2.5 px-5 text-xs font-mono font-bold"
             >
               <span>Join Club</span>
               <ArrowUpRight className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Right Controls: WhatsApp Quick Pill & Hamburger Toggle */}
           <div className="flex items-center gap-2 xl:hidden">
             <a
               href={`https://wa.me/${CLIENT_BUSINESS.contact.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3.5 py-1.5 rounded-full bg-gold text-emerald-deep font-bold text-xs sm:hidden uppercase font-mono tracking-wider"
+              className="px-3 py-1.5 rounded-full bg-gold text-[#091C17] font-black text-[11px] sm:hidden uppercase font-mono tracking-wider flex items-center gap-1 shadow-md"
             >
-              WhatsApp
+              <MessageCircle className="w-3 h-3 fill-current" />
+              <span>Chat</span>
             </a>
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-xl bg-[#091C17] border border-gold/30 text-gold hover:text-white transition-colors"
-              aria-label="Toggle navigation"
+              onClick={() => setMobileMenuOpen(true)}
+              className="p-2.5 rounded-xl bg-[#091C17] border border-gold/40 text-gold hover:text-white transition-colors"
+              aria-label="Open navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <Menu className="w-5 h-5" />
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Drawer Menu */}
+      {/* Fullscreen Mobile Drawer Menu Overlay (z-50, Clean, Prevents Background Scrolling) */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-30 pt-24 pb-8 px-6 bg-[#091C17] border-b border-gold/20 flex flex-col justify-between overflow-y-auto xl:hidden">
-          <div className="space-y-1">
-            <div className="text-[10px] font-mono tracking-widest text-gold uppercase mb-3">
-              CLUB DIRECTORY
+        <div className="fixed inset-0 z-50 bg-[#091C17] flex flex-col justify-between p-5 sm:p-7 overflow-y-auto overscroll-contain animate-fadeIn xl:hidden">
+          {/* Top Bar inside Overlay */}
+          <div className="flex items-center justify-between pb-4 border-b border-gold/20">
+            <TigerLogo size="sm" />
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2.5 rounded-full bg-[#102C24] border border-gold/50 text-gold hover:text-white transition-colors flex items-center justify-center shadow-lg"
+              aria-label="Close navigation menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="py-6 space-y-1 my-auto">
+            <div className="text-[10px] font-mono tracking-widest text-gold uppercase mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
+              <span>NAVIGATION DIRECTORY</span>
             </div>
+
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -166,26 +207,47 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
                   e.preventDefault();
                   handleNavClick(link.href);
                 }}
-                className="block py-3 border-b border-white/5 text-xl font-serif font-bold text-ivory hover:text-gold transition-colors"
+                className="py-3.5 border-b border-white/10 flex items-center justify-between group active:bg-white/5 px-2 rounded-xl transition-all"
               >
-                {link.name}
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs text-gold/70 font-bold">
+                    {link.number}
+                  </span>
+                  <span className="text-xl sm:text-2xl font-serif font-bold text-white group-hover:text-gold transition-colors">
+                    {link.name}
+                  </span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gold/60 group-hover:text-gold group-hover:translate-x-1 transition-all" />
               </a>
             ))}
           </div>
 
-          <div className="pt-6 border-t border-gold/20 space-y-3">
-            <div className="text-xs font-mono text-ivory/60">
-              Kamgar Hospital Road, Ramchandra Nagar, Thane West (400604)
+          {/* Bottom Fast Action Section */}
+          <div className="pt-4 border-t border-gold/20 space-y-3">
+            <div className="flex items-center gap-2 text-xs font-mono text-ivory/70">
+              <MapPin className="w-3.5 h-3.5 text-gold shrink-0" />
+              <span className="truncate">Kamgar Hospital Road, Thane West (400604)</span>
             </div>
-            <a
-              href={`https://wa.me/${CLIENT_BUSINESS.contact.whatsapp}?text=Hi%20The%20Gym%20Tiger%20Fitness`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full btn-gold py-3.5 text-center flex items-center justify-center gap-2"
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span>Connect on WhatsApp</span>
-            </a>
+
+            <div className="grid grid-cols-2 gap-2.5">
+              <a
+                href="tel:+918355968540"
+                className="py-3 px-3 rounded-full bg-[#15392F] border border-gold/40 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all text-center"
+              >
+                <Phone className="w-3.5 h-3.5 text-gold" />
+                <span>Call Coach</span>
+              </a>
+
+              <a
+                href={`https://wa.me/${CLIENT_BUSINESS.contact.whatsapp}?text=Hi%20The%20Gym%20Tiger%20Fitness`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="py-3 px-3 rounded-full bg-gradient-to-r from-gold to-[#FF7518] text-[#091C17] font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all text-center shadow-lg shadow-gold/20"
+              >
+                <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                <span>WhatsApp</span>
+              </a>
+            </div>
           </div>
         </div>
       )}
