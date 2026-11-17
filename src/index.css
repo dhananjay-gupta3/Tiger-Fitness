@@ -5,7 +5,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -14,6 +14,7 @@
     color: #F4F0E6;
     overflow-x: hidden;
     width: 100%;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   }
 
   /* Prevent iOS zoom on input focus by setting 16px font-size */
@@ -41,19 +42,23 @@
   background: #D4B87F;
 }
 
-/* Fluid responsive typography utilities */
+/* Fluid responsive typography utilities - Industry Standard Athletic & Power Fitness */
 .heading-hero {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2.1rem, 5.8vw, 5.4rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(2.5rem, 6.5vw, 5.8rem);
+  line-height: 0.98;
+  letter-spacing: 0.01em;
 }
 
 .heading-section {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.75rem, 4vw, 3.4rem);
-  line-height: 1.12;
-  letter-spacing: -0.015em;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  line-height: 1.05;
+  letter-spacing: 0.015em;
 }
 
 .heading-sub {

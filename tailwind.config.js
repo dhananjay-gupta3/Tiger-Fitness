@@ -45,10 +45,10 @@ export default {
         },
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        luxury: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['"Manrope"', 'sans-serif'],
-        display: ['"Playfair Display"', 'serif'],
+        athletic: ['"Barlow Condensed"', '"Oswald"', 'sans-serif'],
+        display: ['"Barlow Condensed"', '"Oswald"', 'sans-serif'],
+        serif: ['"Barlow Condensed"', '"Oswald"', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         mono: ['"Space Grotesk"', 'monospace'],
       },
       maxWidth: {
