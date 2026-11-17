@@ -34,7 +34,7 @@ export function App() {
           {/* 2. The Gym & Floor (4,500 Sq. Ft. Space, Key Features & 6 Real Photos) */}
           <TheGymSection />
 
-          {/* 3. Official Membership Tariff (Workout Only & All-Inclusive Plans + Rate Card Inspection) */}
+          {/* 3. Official Membership Tariff (Workout Only & All-Inclusive Plans) */}
           <MembershipsSection />
 
           {/* 4. Timings & Coach Mentorship (Weekly Schedule, Live Open Status, Ketan Sir Profile & FAQs) */}

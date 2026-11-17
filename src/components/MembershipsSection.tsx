@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Check, Info, ArrowUpRight, MessageCircle, Star, Crown, Eye, Sparkles, ShieldCheck, Flame, X } from 'lucide-react';
+import { Check, Info, ArrowUpRight, MessageCircle, Star, Crown, Sparkles, ShieldCheck, Flame } from 'lucide-react';
 import { OFFICIAL_PRICING_CATEGORIES, CLIENT_BUSINESS } from '../data/gymData';
 
 export const MembershipsSection: React.FC = () => {
   const [activeCategoryId, setActiveCategoryId] = useState<'only-workout' | 'all-inclusive'>('all-inclusive');
-  const [showTariffModal, setShowTariffModal] = useState(false);
 
   const activeCategory = OFFICIAL_PRICING_CATEGORIES.find(c => c.id === activeCategoryId) || OFFICIAL_PRICING_CATEGORIES[0];
 
@@ -21,20 +20,12 @@ export const MembershipsSection: React.FC = () => {
               OFFICIAL MEMBERSHIP <span className="text-gold italic font-normal tracking-normal">PLANS.</span>
             </h2>
             <p className="text-sm font-sans text-ivory/70 max-w-xl">
-              Direct rates from the official printed rate card of <strong className="text-white">The Gym Tiger Fitness</strong>. Zero hidden registration fees, zero sales pressure.
+              Direct rates from the official tariff card of <strong className="text-white">The Gym Tiger Fitness</strong>. Zero hidden registration fees, zero sales pressure.
             </p>
           </div>
 
-          {/* Quick Action: View Printed Tariff Card Photo */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-            <button
-              onClick={() => setShowTariffModal(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#091C17] hover:bg-[#15392F] border border-gold/40 text-xs font-mono text-gold hover:text-white transition-all shadow-md group"
-            >
-              <Eye className="w-4 h-4 text-lime group-hover:scale-110 transition-transform" />
-              <span>Inspect Official Rate Card Photo</span>
-            </button>
-
+          {/* Verified Badge */}
+          <div className="flex items-center gap-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-lime/10 border border-lime/30 text-xs font-mono text-lime">
               <ShieldCheck className="w-4 h-4" />
               <span>Verified Authentic Tariff</span>
@@ -221,66 +212,6 @@ export const MembershipsSection: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Official Tariff Card Modal / Lightbox */}
-      {showTariffModal && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md p-4 sm:p-6 flex items-center justify-center animate-fadeIn">
-          <div className="relative max-w-2xl w-full bg-[#091C17] border-2 border-gold/60 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
-            {/* Modal Header */}
-            <div className="p-4 sm:p-5 border-b border-gold/25 flex items-center justify-between bg-[#0C231D]">
-              <div>
-                <span className="text-[10px] font-mono uppercase text-gold font-bold tracking-wider">
-                  OFFICIAL PHYSICAL TARIFF CARD
-                </span>
-                <h4 className="text-base sm:text-lg font-serif font-bold text-white">
-                  The Gym Tiger Fitness Tariff Inspection
-                </h4>
-              </div>
-              <button
-                onClick={() => setShowTariffModal(false)}
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-                aria-label="Close modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Modal Image Body */}
-            <div className="p-4 sm:p-6 overflow-y-auto flex flex-col items-center">
-              <div className="rounded-2xl overflow-hidden border border-gold/30 shadow-xl max-w-md w-full bg-black">
-                <img
-                  src="/images/gym/official-pricing-menu.jpg"
-                  alt="Official The Gym Tiger Fitness Printed Pricing Menu"
-                  className="w-full h-auto object-contain"
-                />
-              </div>
-
-              <div className="mt-4 p-4 rounded-xl bg-[#0E261F] border border-gold/20 text-xs text-ivory/85 text-center max-w-md w-full font-mono">
-                ✓ 100% Genuine client rate card photographed at The Gym Tiger Fitness, Kamgar Hospital Road, Thane West.
-              </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-4 border-t border-gold/20 flex justify-end gap-3 bg-[#0C231D]">
-              <button
-                onClick={() => setShowTariffModal(false)}
-                className="px-5 py-2.5 rounded-full bg-white/10 text-white text-xs font-mono uppercase tracking-wider hover:bg-white/20 transition-all"
-              >
-                Close
-              </button>
-              <a
-                href={`https://wa.me/${CLIENT_BUSINESS.contact.whatsapp}?text=Hi%20The%20Gym%20Tiger%20Fitness%2C%20I%20have%20reviewed%20your%20official%20tariff%20card%20and%20would%20like%20to%20enroll.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gold py-2.5 px-5 text-xs font-mono font-bold"
-              >
-                <span>Book Admission via WhatsApp</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
