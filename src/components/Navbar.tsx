@@ -42,10 +42,30 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { number: '01', name: 'The Gym & Floor', href: '#the-gym' },
-    { number: '02', name: 'Pricing & Plans', href: '#pricing' },
-    { number: '03', name: 'Timings & Coach', href: '#timings' },
-    { number: '04', name: 'Location & Contact', href: '#contact' },
+    {
+      number: '01',
+      name: 'The Gym & Floor',
+      desc: '4,500 Sq. Ft Arena, Turf Track & Equipment',
+      href: '#the-gym',
+    },
+    {
+      number: '02',
+      name: 'Pricing & Plans',
+      desc: 'Workout & All-Inclusive VIP from ₹2,000/mo',
+      href: '#pricing',
+    },
+    {
+      number: '03',
+      name: 'Timings & Coach',
+      desc: '5 AM–11:30 PM & Head Coach Ketan Sir',
+      href: '#timings',
+    },
+    {
+      number: '04',
+      name: 'Location & Contact',
+      desc: 'Kamgar Hospital Rd, Thane West & Map',
+      href: '#contact',
+    },
   ];
 
   const handleNavClick = (href: string) => {
@@ -179,74 +199,110 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
 
       {/* Fullscreen Mobile Drawer Menu Overlay (z-50, Clean, Prevents Background Scrolling) */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-[#091C17] flex flex-col justify-between p-5 sm:p-7 overflow-y-auto overscroll-contain animate-fadeIn xl:hidden">
+        <div className="fixed inset-0 z-50 bg-[#071713] flex flex-col overflow-y-auto overscroll-contain animate-fadeIn xl:hidden">
           {/* Top Bar inside Overlay */}
-          <div className="flex items-center justify-between pb-4 border-b border-gold/20">
+          <div className="sticky top-0 z-10 bg-[#071713]/95 backdrop-blur-md px-5 py-3.5 border-b border-gold/20 flex items-center justify-between shrink-0">
             <TigerLogo size="sm" />
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2.5 rounded-full bg-[#102C24] border border-gold/50 text-gold hover:text-white transition-colors flex items-center justify-center shadow-lg"
+              className="w-10 h-10 rounded-full bg-[#102C24] border border-gold/50 text-gold hover:text-white transition-colors flex items-center justify-center shadow-lg active:scale-95"
               aria-label="Close navigation menu"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Navigation Links */}
-          <div className="py-6 space-y-1 my-auto">
-            <div className="text-[10px] font-mono tracking-widest text-gold uppercase mb-4 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
-              <span>NAVIGATION DIRECTORY</span>
+          {/* Drawer Body - tight, purposeful, zero empty void */}
+          <div className="flex-1 flex flex-col justify-between px-5 py-4 space-y-4">
+            {/* Quick Live Hours Strip */}
+            <div className="bg-[#0B211A] border border-gold/20 rounded-xl px-3.5 py-2.5 flex items-center justify-between text-xs shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
+                <span className="font-mono font-bold text-gold uppercase tracking-wider text-[11px]">
+                  OPEN MON–SAT
+                </span>
+              </div>
+              <span className="font-mono text-ivory/70 text-[11px]">
+                5 AM–2 PM • 4 PM–11:30 PM
+              </span>
             </div>
 
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(link.href);
-                }}
-                className="py-3.5 border-b border-white/10 flex items-center justify-between group active:bg-white/5 px-2 rounded-xl transition-all"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-xs text-gold/70 font-bold">
-                    {link.number}
-                  </span>
-                  <span className="text-xl sm:text-2xl font-serif font-bold text-white group-hover:text-gold transition-colors">
-                    {link.name}
-                  </span>
+            {/* Navigation Directory */}
+            <div className="space-y-2">
+              <div className="text-[10px] font-mono tracking-widest text-gold/80 uppercase pb-1 flex items-center gap-2">
+                <span>DIRECTORY</span>
+                <span className="h-px flex-1 bg-gold/15" />
+              </div>
+
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(link.href);
+                  }}
+                  className="py-3 px-3.5 rounded-xl border border-white/5 bg-[#0A1D17]/90 hover:bg-[#102D24] active:bg-[#13362B] flex items-center justify-between group transition-all"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="font-mono text-xs text-gold font-bold mt-0.5">
+                      {link.number}
+                    </span>
+                    <div>
+                      <div className="text-base font-serif font-bold text-white group-hover:text-gold transition-colors leading-snug">
+                        {link.name}
+                      </div>
+                      <div className="text-[11px] font-sans text-ivory/60 mt-0.5">
+                        {link.desc}
+                      </div>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gold/60 group-hover:text-gold group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
+                </a>
+              ))}
+            </div>
+
+            {/* Personal Trainer Highlight Card */}
+            <div className="p-3.5 rounded-xl bg-gradient-to-r from-[#0F2D24] to-[#143B30] border border-gold/30 flex items-center gap-3 shrink-0">
+              <div className="w-9 h-9 rounded-lg bg-gold/20 border border-gold/40 flex items-center justify-center shrink-0">
+                <Sparkles className="w-4 h-4 text-gold" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-xs font-mono font-bold text-gold uppercase tracking-wider">
+                  Personal Training (PT) Available
                 </div>
-                <ChevronRight className="w-4 h-4 text-gold/60 group-hover:text-gold group-hover:translate-x-1 transition-all" />
-              </a>
-            ))}
-          </div>
-
-          {/* Bottom Fast Action Section */}
-          <div className="pt-4 border-t border-gold/20 space-y-3">
-            <div className="flex items-center gap-2 text-xs font-mono text-ivory/70">
-              <MapPin className="w-3.5 h-3.5 text-gold shrink-0" />
-              <span className="truncate">Kamgar Hospital Road, Thane West (400604)</span>
+                <div className="text-[11px] text-ivory/70 truncate">
+                  1-on-1 Transformation with Head Coach Ketan Sir
+                </div>
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2.5">
-              <a
-                href="tel:+918355968540"
-                className="py-3 px-3 rounded-full bg-[#15392F] border border-gold/40 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all text-center"
-              >
-                <Phone className="w-3.5 h-3.5 text-gold" />
-                <span>Call Coach</span>
-              </a>
+            {/* Bottom Actions & Location */}
+            <div className="pt-2 border-t border-gold/20 space-y-3 shrink-0">
+              <div className="flex items-center gap-2 text-xs font-mono text-ivory/70">
+                <MapPin className="w-3.5 h-3.5 text-gold shrink-0" />
+                <span className="truncate">Kamgar Hospital Road, Thane West (400604)</span>
+              </div>
 
-              <a
-                href={`https://wa.me/${CLIENT_BUSINESS.contact.whatsapp}?text=Hi%20The%20Gym%20Tiger%20Fitness`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-3 px-3 rounded-full bg-gradient-to-r from-gold to-[#FF7518] text-[#091C17] font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all text-center shadow-lg shadow-gold/20"
-              >
-                <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                <span>WhatsApp</span>
-              </a>
+              <div className="grid grid-cols-2 gap-2.5">
+                <a
+                  href="tel:+918355968540"
+                  className="py-3 px-3 rounded-xl bg-[#122F26] border border-gold/40 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]"
+                >
+                  <Phone className="w-3.5 h-3.5 text-gold" />
+                  <span>Call Coach</span>
+                </a>
+
+                <a
+                  href={`https://wa.me/${CLIENT_BUSINESS.contact.whatsapp}?text=Hi%20The%20Gym%20Tiger%20Fitness%2C%20I%20am%20interested%20in%20joining`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3 px-3 rounded-xl bg-gradient-to-r from-gold to-[#FF7518] text-[#091C17] font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-[0.98]"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
