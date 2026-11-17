@@ -201,21 +201,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 bg-[#071713] flex flex-col overflow-y-auto overscroll-contain animate-fadeIn xl:hidden">
           {/* Top Bar inside Overlay */}
-          <div className="sticky top-0 z-10 bg-[#071713]/95 backdrop-blur-md px-5 py-3.5 border-b border-gold/20 flex items-center justify-between shrink-0">
+          <div className="sticky top-0 z-20 bg-[#071713]/95 backdrop-blur-md px-4 py-3 border-b border-gold/20 flex items-center justify-between shrink-0">
             <TigerLogo size="sm" />
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="w-10 h-10 rounded-full bg-[#102C24] border border-gold/50 text-gold hover:text-white transition-colors flex items-center justify-center shadow-lg active:scale-95"
+              className="w-9 h-9 rounded-full bg-[#102C24] border border-gold/50 text-gold hover:text-white transition-colors flex items-center justify-center shadow-lg active:scale-95"
               aria-label="Close navigation menu"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Drawer Body - tight, purposeful, zero empty void */}
-          <div className="flex-1 flex flex-col justify-between px-5 py-4 space-y-4">
+          {/* Drawer Body - tight, compact, zero artificial gap */}
+          <div className="p-4 flex flex-col gap-2.5 max-w-md mx-auto w-full">
             {/* Quick Live Hours Strip */}
-            <div className="bg-[#0B211A] border border-gold/20 rounded-xl px-3.5 py-2.5 flex items-center justify-between text-xs shrink-0">
+            <div className="bg-[#0B211A] border border-gold/20 rounded-xl px-3 py-2 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
                 <span className="font-mono font-bold text-gold uppercase tracking-wider text-[11px]">
@@ -228,12 +228,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
             </div>
 
             {/* Navigation Directory */}
-            <div className="space-y-2">
-              <div className="text-[10px] font-mono tracking-widest text-gold/80 uppercase pb-1 flex items-center gap-2">
-                <span>DIRECTORY</span>
-                <span className="h-px flex-1 bg-gold/15" />
-              </div>
+            <div className="text-[10px] font-mono tracking-widest text-gold/80 uppercase pt-1 px-1 flex items-center gap-2">
+              <span>DIRECTORY</span>
+              <span className="h-px flex-1 bg-gold/15" />
+            </div>
 
+            {/* Navigation Links - compact and tight */}
+            <div className="flex flex-col gap-1.5">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
@@ -242,29 +243,29 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
                     e.preventDefault();
                     handleNavClick(link.href);
                   }}
-                  className="py-3 px-3.5 rounded-xl border border-white/5 bg-[#0A1D17]/90 hover:bg-[#102D24] active:bg-[#13362B] flex items-center justify-between group transition-all"
+                  className="py-2.5 px-3 rounded-xl border border-white/5 bg-[#0A1D17] hover:bg-[#102D24] active:bg-[#13362B] flex items-center justify-between group transition-all"
                 >
-                  <div className="flex items-start gap-3">
-                    <span className="font-mono text-xs text-gold font-bold mt-0.5">
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-xs text-gold font-bold">
                       {link.number}
                     </span>
                     <div>
-                      <div className="text-base font-serif font-bold text-white group-hover:text-gold transition-colors leading-snug">
+                      <div className="text-base font-serif font-bold text-white group-hover:text-gold transition-colors leading-tight">
                         {link.name}
                       </div>
-                      <div className="text-[11px] font-sans text-ivory/60 mt-0.5">
+                      <div className="text-[11px] font-sans text-ivory/60">
                         {link.desc}
                       </div>
                     </div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-gold/60 group-hover:text-gold group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
+                  <ChevronRight className="w-4 h-4 text-gold/60 group-hover:text-gold transition-all shrink-0 ml-2" />
                 </a>
               ))}
             </div>
 
             {/* Personal Trainer Highlight Card */}
-            <div className="p-3.5 rounded-xl bg-gradient-to-r from-[#0F2D24] to-[#143B30] border border-gold/30 flex items-center gap-3 shrink-0">
-              <div className="w-9 h-9 rounded-lg bg-gold/20 border border-gold/40 flex items-center justify-center shrink-0">
+            <div className="p-3 rounded-xl bg-gradient-to-r from-[#0F2D24] to-[#143B30] border border-gold/30 flex items-center gap-3 mt-1">
+              <div className="w-8 h-8 rounded-lg bg-gold/20 border border-gold/40 flex items-center justify-center shrink-0">
                 <Sparkles className="w-4 h-4 text-gold" />
               </div>
               <div className="flex-1 min-w-0">
@@ -277,32 +278,31 @@ export const Navbar: React.FC<NavbarProps> = ({ onInquireClick }) => {
               </div>
             </div>
 
-            {/* Bottom Actions & Location */}
-            <div className="pt-2 border-t border-gold/20 space-y-3 shrink-0">
-              <div className="flex items-center gap-2 text-xs font-mono text-ivory/70">
-                <MapPin className="w-3.5 h-3.5 text-gold shrink-0" />
-                <span className="truncate">Kamgar Hospital Road, Thane West (400604)</span>
-              </div>
+            {/* Direct CTAs */}
+            <div className="grid grid-cols-2 gap-2 mt-1">
+              <a
+                href="tel:+918355968540"
+                className="py-2.5 px-3 rounded-xl bg-[#122F26] border border-gold/40 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]"
+              >
+                <Phone className="w-3.5 h-3.5 text-gold" />
+                <span>Call Coach</span>
+              </a>
 
-              <div className="grid grid-cols-2 gap-2.5">
-                <a
-                  href="tel:+918355968540"
-                  className="py-3 px-3 rounded-xl bg-[#122F26] border border-gold/40 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]"
-                >
-                  <Phone className="w-3.5 h-3.5 text-gold" />
-                  <span>Call Coach</span>
-                </a>
+              <a
+                href={`https://wa.me/${CLIENT_BUSINESS.contact.whatsapp}?text=Hi%20The%20Gym%20Tiger%20Fitness%2C%20I%20am%20interested%20in%20joining`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-gold to-[#FF7518] text-[#091C17] font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-[0.98]"
+              >
+                <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                <span>WhatsApp</span>
+              </a>
+            </div>
 
-                <a
-                  href={`https://wa.me/${CLIENT_BUSINESS.contact.whatsapp}?text=Hi%20The%20Gym%20Tiger%20Fitness%2C%20I%20am%20interested%20in%20joining`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="py-3 px-3 rounded-xl bg-gradient-to-r from-gold to-[#FF7518] text-[#091C17] font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-[0.98]"
-                >
-                  <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                  <span>WhatsApp</span>
-                </a>
-              </div>
+            {/* Location footer strip */}
+            <div className="px-1 py-1 flex items-center gap-1.5 text-[11px] font-mono text-ivory/60">
+              <MapPin className="w-3 h-3 text-gold shrink-0" />
+              <span className="truncate">Kamgar Hospital Road, Thane West (400604)</span>
             </div>
           </div>
         </div>
